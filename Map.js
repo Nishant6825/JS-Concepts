@@ -1,5 +1,7 @@
 let newMap = new Map();
 
+
+
 newMap.set("Alice", 85);
 newMap.set("Bob", 92);
 
@@ -78,4 +80,58 @@ function getCount(str) {
     return map;
 }
 
-console.log(getCount(str));
+// console.log(getCount(str));
+
+
+function getfirstNonRepeatingChar(suc) {
+
+    let map = new Map();
+
+    for (const char of suc) {
+        map.set(char, (map.get(char) || 0) + 1);
+    }
+
+    for (const [char, count] of map) {
+        if (count === 1) return char;
+    }
+    return null;
+
+}
+// console.log(getfirstNonRepeatingChar('ayuyuy'));
+
+
+// console.log(getFirstNonRepeatingChar("aabbcdd")); // ➡️ "c"
+// console.log(getFirstNonRepeatingChar("xxyzx"));   // ➡️ "y"
+// console.log(getFirstNonRepeatingChar("aabb"));    // ➡️ null
+
+const people = [
+    { name: "Alice", city: "Goa" },
+    { name: "Bob", city: "Delhi" },
+    { name: "Charlie", city: "Goa" }
+];
+
+
+
+function cityMapping(arr) {
+
+    const map = new Map();
+
+    for (const [key, value] of Object.entries(people)) {
+        if (!map.get(value?.city)) {
+            map.set(value?.city, [value]);
+            console.log(map);
+        }
+        else {
+            map.get(value?.city).map((el) => {
+                if (el?.city === value?.city) {
+                    map.get(value?.city).push(value);
+                }
+            })
+        }
+
+    }
+    return map;
+}
+
+console.log(cityMapping(people));
+
