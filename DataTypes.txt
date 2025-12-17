@@ -1,0 +1,194 @@
+JAVASCRIPT DATA TYPES – INTERVIEW REVISION NOTES
+
+What are Data Types?
+Data types specify what type of value a variable can store.
+JavaScript is a dynamically typed language, meaning variable types are decided at runtime.
+
+Number of Data Types in JavaScript
+JavaScript has 8 data types:
+7 Primitive
+1 Non-Primitive (Object)
+
+Primitive Data Types
+Primitive data types store values directly and are immutable.
+
+Number
+Represents both integer and floating-point numbers.
+Includes special values like Infinity and NaN.
+
+Example:
+let x = 10;
+let y = 10.5;
+
+Important points:
+
+JavaScript has no separate int or float type
+
+typeof NaN returns "number"
+
+String
+Represents textual data.
+Can be written using single quotes, double quotes, or backticks.
+
+Example:
+let name = "Nishant";
+
+Important points:
+
+Strings are immutable
+
+Template literals use backticks
+
+Boolean
+Represents logical values: true or false.
+
+Example:
+let isValid = true;
+
+Falsy values in JavaScript:
+false, 0, "", null, undefined, NaN
+
+Undefined
+A variable that is declared but not assigned any value.
+
+Example:
+let a;
+
+Important point:
+
+Default value assigned by JavaScript
+
+Null
+Represents intentional absence of value.
+Assigned manually by the developer.
+
+Example:
+let data = null;
+
+Important point:
+
+typeof null returns "object" (this is a JavaScript bug)
+
+Symbol (ES6)
+Used to create unique identifiers.
+Mainly used as object keys to avoid conflicts.
+
+Example:
+let id = Symbol("id");
+
+Important point:
+
+Each Symbol is unique
+
+BigInt
+Used to represent very large integers.
+Ends with the letter n.
+
+Example:
+let big = 12345678901234567890n;
+
+Important points:
+
+Cannot mix BigInt with Number
+
+Used when Number exceeds safe integer limit
+
+Non-Primitive Data Type
+
+Object
+Stores data in key-value pairs.
+Stored by reference.
+
+Example:
+let user = { name: "Nishant", age: 25 };
+
+Array (Special Object)
+Used to store multiple values.
+
+Example:
+let arr = [1, 2, 3];
+
+Important point:
+
+typeof array returns "object"
+
+Array.isArray() is used to check arrays
+
+Function (Special Object)
+Functions are callable objects.
+
+Example:
+function greet() {}
+
+Important point:
+
+typeof function returns "function"
+
+Primitive vs Reference Types
+
+Primitive:
+
+Stored by value
+
+Immutable
+
+Compared by value
+
+Reference:
+
+Stored by reference
+
+Mutable
+
+Compared by memory reference
+
+Example:
+let a = 10;
+let b = a;
+b = 20;
+Result: a remains 10
+
+Example:
+let obj1 = { x: 1 };
+let obj2 = obj1;
+obj2.x = 5;
+Result: obj1.x becomes 5
+
+typeof Operator Results
+
+typeof 10 -> number
+typeof "hello" -> string
+typeof true -> boolean
+typeof undefined -> undefined
+typeof null -> object (bug)
+typeof {} -> object
+typeof [] -> object
+typeof function(){} -> function
+
+Common Interview Questions
+
+Q: Is JavaScript statically typed?
+A: No, JavaScript is dynamically typed.
+
+Q: Why does typeof null return object?
+A: It is a known bug in JavaScript, kept for backward compatibility.
+
+Q: Difference between null and undefined?
+null:
+
+Intentional absence of value
+
+Assigned by developer
+
+undefined:
+
+Variable declared but not assigned
+
+Assigned by JavaScript
+
+Q: Is array a primitive data type?
+A: No, array is an object.
+
+One-Line Interview Answer
+
+JavaScript has 8 data types where primitive types are stored by value and non-primitive types are stored by reference, making JavaScript a dynamically typed language.

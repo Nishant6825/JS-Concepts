@@ -1,0 +1,229 @@
+1️⃣ What is Concurrency in JavaScript?
+
+Concurrency means:
+
+JS can handle multiple tasks at the same time logically, even though it is single-threaded.
+
+🔑 JS achieves concurrency using:
+
+Event Loop
+
+Call Stack
+
+Web APIs
+
+Callback Queue
+
+Microtask Queue
+
+👉 JS does NOT run tasks in parallel (except Web Workers).
+
+2️⃣ Is JavaScript Single-Threaded?
+
+✅ Yes
+
+One Call Stack
+
+One thing executes at a time
+
+No true multi-threading
+
+But still handles async operations efficiently using the Event Loop.
+
+3️⃣ What is the Event Loop?
+
+Event Loop is a mechanism that:
+
+Continuously checks whether the call stack is empty and then pushes pending tasks from queues into it.
+
+📌 It enables non-blocking asynchronous behavior.
+
+4️⃣ Components of Event Loop
+1. Call Stack
+
+Executes synchronous code
+
+LIFO (Last In First Out)
+
+function a() { b(); }
+function b() { console.log("Hello"); }
+a();
+
+2. Web APIs (Browser / Node.js)
+
+Handles async operations:
+
+setTimeout
+
+setInterval
+
+fetch
+
+DOM events
+
+setTimeout(() => console.log("Hi"), 1000);
+
+3. Callback Queue (Macrotask Queue)
+
+Contains:
+
+setTimeout
+
+setInterval
+
+setImmediate (Node.js)
+
+DOM events
+
+4. Microtask Queue
+
+Contains:
+
+Promise.then / catch / finally
+
+queueMicrotask
+
+MutationObserver
+
+🚨 Microtasks have higher priority than macrotasks
+
+5️⃣ Execution Order (VERY IMPORTANT)
+
+Priority Order:
+
+Call Stack (sync code)
+
+Microtask Queue
+
+Macrotask Queue
+
+6️⃣ Example – Event Loop in Action
+console.log("Start");
+
+setTimeout(() => {
+  console.log("Timeout");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("Promise");
+});
+
+console.log("End");
+
+✅ Output:
+Start
+End
+Promise
+Timeout
+
+🔍 Why?
+
+Sync code runs first
+
+Promise goes to microtask queue
+
+setTimeout goes to macrotask queue
+
+Microtasks run before macrotasks
+
+7️⃣ setTimeout with 0 ms
+setTimeout(() => console.log("A"), 0);
+console.log("B");
+
+Output:
+B
+A
+
+
+📌 0 ms does NOT mean immediate execution
+It means minimum delay after stack is empty
+
+8️⃣ Promise vs setTimeout (Common Interview Question)
+setTimeout(() => console.log("Timeout"), 0);
+
+Promise.resolve().then(() => console.log("Promise"));
+
+Output:
+Promise
+Timeout
+
+
+✔ Because microtasks run before macrotasks
+
+9️⃣ Blocking the Event Loop
+while(true) {}
+
+
+❌ This blocks:
+
+UI rendering
+
+API calls
+
+Timers
+
+User interaction
+
+📌 Heavy tasks should be offloaded (Web Workers).
+
+🔟 How JS Achieves Non-Blocking Behavior?
+
+Async tasks handled by Web APIs
+
+Results queued
+
+Event Loop pushes them when stack is empty
+
+👉 Main thread stays free
+
+1️⃣1️⃣ Starvation Problem
+
+If microtasks keep getting added continuously:
+
+function loop() {
+  Promise.resolve().then(loop);
+}
+loop();
+
+
+❌ Macrotasks may never execute
+
+📌 Called microtask starvation
+
+1️⃣2️⃣ Event Loop in Browser vs Node.js
+Browser	Node.js
+Web APIs	Libuv
+UI Rendering	No UI
+setImmediate ❌	setImmediate ✅
+1️⃣3️⃣ Real-World Use Case
+
+API calls (fetch)
+
+Timers
+
+Click handlers
+
+Background tasks
+
+Non-blocking server requests (Node.js)
+
+1️⃣4️⃣ Interview One-Liners
+
+JavaScript is single-threaded but asynchronous
+
+Event Loop enables concurrency
+
+Promises go to microtask queue
+
+setTimeout goes to macrotask queue
+
+Microtasks execute before macrotasks
+
+1️⃣5️⃣ Common Interview Questions
+
+✅ What is the event loop?
+✅ Why promises execute before setTimeout?
+✅ What happens if call stack is not empty?
+✅ Difference between microtask & macrotask?
+✅ Is JS multi-threaded?
+✅ What is blocking code?

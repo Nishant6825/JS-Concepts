@@ -1,0 +1,167 @@
+JAVASCRIPT HOISTING – INTERVIEW NOTES
+
+What is Hoisting?
+Hoisting is JavaScript’s default behavior of moving declarations to the top of their scope during the memory creation phase of execution context.
+
+Only declarations are hoisted, not initializations.
+
+Why Hoisting Happens?
+Hoisting happens because JavaScript executes code in two phases:
+
+Memory Creation Phase
+
+Code Execution Phase
+
+During memory creation, variables and functions are allocated memory.
+
+Hoisting with var
+
+var declarations are hoisted
+
+Initialized with undefined
+
+Example:
+console.log(a);
+var a = 10;
+
+Memory Phase:
+a -> undefined
+
+Output:
+undefined
+
+Hoisting with let and const
+
+let and const are hoisted
+
+BUT they are not initialized
+
+They stay in Temporal Dead Zone (TDZ)
+
+Example:
+console.log(b);
+let b = 10;
+
+Output:
+ReferenceError: Cannot access 'b' before initialization
+
+Temporal Dead Zone (TDZ)
+
+TDZ is the time between:
+
+Variable hoisting
+
+Variable initialization
+
+Accessing let or const variables in TDZ throws ReferenceError.
+
+Hoisting with const
+
+const must be initialized at declaration
+
+Hoisted but not accessible before initialization
+
+Example:
+const x = 5; (valid)
+const y; (invalid)
+
+Function Hoisting
+
+Function declarations are fully hoisted.
+
+Example:
+greet();
+
+function greet() {
+console.log("Hello");
+}
+
+Output:
+Hello
+
+Function Expression Hoisting
+
+Function expressions depend on variable hoisting.
+
+Example:
+sayHi();
+
+var sayHi = function() {
+console.log("Hi");
+};
+
+Output:
+TypeError: sayHi is not a function
+
+Reason:
+sayHi is hoisted as undefined
+
+Arrow Function Hoisting
+
+Arrow functions behave like function expressions.
+
+Example:
+hello();
+
+const hello = () => {
+console.log("Hello");
+};
+
+Output:
+ReferenceError (TDZ)
+
+Hoisting Summary Table
+
+var:
+
+Hoisted
+
+Initialized as undefined
+
+Accessible before declaration
+
+let:
+
+Hoisted
+
+Not initialized
+
+In TDZ
+
+const:
+
+Hoisted
+
+Not initialized
+
+In TDZ
+
+Function Declaration:
+
+Fully hoisted
+
+Can be called before definition
+
+Function Expression / Arrow Function:
+
+Hoisted depending on variable
+
+Cannot be called before assignment
+
+Common Interview Questions
+
+Q: Is JavaScript hoisted?
+A: Yes, declarations are hoisted during memory creation phase.
+
+Q: Are let and const hoisted?
+A: Yes, but they remain in Temporal Dead Zone.
+
+Q: What is TDZ?
+A: The period between variable hoisting and initialization where access is not allowed.
+
+Q: Why var returns undefined but let throws error?
+A: var is initialized with undefined, let is not initialized.
+
+One-Line Interview Answer
+
+Hoisting is JavaScript’s behavior of moving declarations to the top of their scope during the memory creation phase, allowing var and function declarations to be accessed before their actual definition.
