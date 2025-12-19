@@ -1,0 +1,48 @@
+let arr = [43, 56, 878, 987, 63, 2, 74847, 83738, 233223, 74647];
+// arr = sort(arr);
+let Mainmax = arr[0], Mainmin = arr[0]
+
+for (let i = 0; i <= arr.length; i++) {
+
+
+    if (arr[i] < Mainmin) {
+        Mainmin = arr[i]
+    }
+
+    if (arr[i] > Mainmax) Mainmax = arr[i];
+
+
+}
+
+
+console.log(Mainmax);
+console.log(Mainmin);
+
+
+
+// let arr = [1, 4, 5, 3, 6, 8, 7];
+
+
+function sort(arr) {
+
+
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr.length - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                let temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp
+            }
+        }
+    }
+    return arr;
+}
+
+// console.log(sort(arr));
+
+
+
+let arrr = [12, 3, 5, 6]
+
+
+console.log(arrr.sort((a, b) => a - b));

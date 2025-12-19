@@ -1,0 +1,202 @@
+const cluster = require("cluster");
+const http = require("http");
+const os = require("os");
+
+const numCPUs = os.cpus().length;
+
+if (cluster.isPrimary) {
+    console.log(`Master ${process.pid} is running`);
+
+    for (let i = 0; i < numCPUs; i++) {
+        cluster.fork();
+    }
+
+    cluster.on("exit", (worker) => {
+        console.log(`Worker ${worker.process.pid} died`);
+        cluster.fork(); // restart worker
+    });
+
+} else {
+    http.createServer((req, res) => {
+        res.end(`Handled by worker ${process.pid}`);
+    }).listen(3000);
+
+    console.log(`Worker ${process.pid} started`);
+}
+
+
+
+
+Cluster Module in Node.js – Interview Prep
+1️⃣ What is the Cluster Module ?
+    Definition(Interview - ready ⭐)
+
+The Cluster module allows Node.js to create multiple child processes(workers) that share the same server port, enabling full utilization of multi - core CPUs.
+
+👉 It helps overcome Node.js’s single - threaded limitation.
+
+2️⃣ Why Do We Need Cluster ?
+    Problem
+
+Node.js runs on one main thread
+
+On a multi - core CPU, only one core is used
+
+Solution
+
+Cluster forks multiple worker processes
+
+Each worker runs its own event loop
+
+All workers share the same port
+
+3️⃣ How Cluster Works(VERY IMPORTANT ⭐)
+
+Master(Primary) process starts
+
+Master forks worker processes
+
+Workers handle incoming requests
+
+OS distributes load between workers(round - robin)
+
+4️⃣ Basic Cluster Example
+const cluster = require("cluster");
+const http = require("http");
+const os = require("os");
+
+const numCPUs = os.cpus().length;
+
+if (cluster.isPrimary) {
+    console.log(`Master ${process.pid} is running`);
+
+    for (let i = 0; i < numCPUs; i++) {
+        cluster.fork();
+    }
+
+    cluster.on("exit", (worker) => {
+        console.log(`Worker ${worker.process.pid} died`);
+        cluster.fork(); // restart worker
+    });
+
+} else {
+    http.createServer((req, res) => {
+        res.end(`Handled by worker ${process.pid}`);
+    }).listen(3000);
+
+    console.log(`Worker ${process.pid} started`);
+}
+
+5️⃣ Master vs Worker Process
+Master(Primary)	Worker
+Forks workers	Handles requests
+No business logic	Runs app code
+Manages workers	Independent event loop
+6️⃣ Is Cluster Multithreading ? (TRICK QUESTION ⭐)
+
+❌ No
+✔️ It is multi - process
+
+Each worker = separate process
+
+Separate memory
+
+Communicate via IPC
+
+7️⃣ Load Balancing in Cluster
+
+Node.js uses round - robin scheduling
+
+OS decides which worker gets request
+
+Can be disabled on Windows
+
+cluster.schedulingPolicy = cluster.SCHED_RR;
+
+8️⃣ Shared State Problem(VERY IMPORTANT ⚠️)
+
+❌ Workers do NOT share memory
+
+let count = 0; // each worker has its own copy
+
+Solutions
+
+✔️ Redis
+✔️ Database
+✔️ Message passing
+✔️ Shared external cache
+
+9️⃣ Communication Between Master & Workers
+Send message from worker
+process.send({ msg: "hello master" });
+
+Receive in master
+cluster.on("message", (worker, message) => {
+    console.log(message);
+});
+
+🔟 Cluster Events(Often Asked)
+Event	Description
+fork	Worker created
+online	Worker online
+listening	Worker bound to port
+exit	Worker exited
+1️⃣1️⃣ Cluster vs Worker Threads(VERY COMMON ⭐)
+Cluster	Worker Threads
+Multi - process	Multi - thread
+Separate memory	Shared memory
+Best for HTTP servers	CPU - intensive tasks
+IPC communication	SharedArrayBuffer
+1️⃣2️⃣ Cluster vs PM2
+Cluster	PM2
+Node core module Process manager
+Manual setup	Automatic
+Limited monitoring	Rich monitoring
+No auto deploy	Auto restart, logs
+
+👉 PM2 internally uses cluster mode
+
+1️⃣3️⃣ When to Use Cluster ?
+
+✔️ High - traffic APIs
+✔️ CPU has multiple cores
+✔️ Stateless services
+✔️ Horizontal scaling preparation
+
+1️⃣4️⃣ When NOT to Use Cluster ?
+
+❌ CPU - heavy computations
+❌ Stateful in -memory apps
+❌ Small applications
+❌ When using serverless
+
+1️⃣5️⃣ Real - World Use Case
+
+REST APIs
+
+Payment gateways
+
+Chat servers
+
+Microservices
+
+1️⃣6️⃣ Common Interview Q & A
+Q1.Does cluster improve performance ?
+
+✔️ Yes(better CPU utilization)
+
+Q2.Can workers share variables ?
+
+❌ No
+
+Q3.What happens if a worker crashes ?
+
+✔️ Master can restart it
+
+Q4.Is cluster available in browser ?
+
+❌ No(Node.js only)
+
+1️⃣7️⃣ One - Line Interview Summary ⭐
+
+The Cluster module enables Node.js applications to utilize multi - core CPUs by running multiple worker processes that share the same server port.

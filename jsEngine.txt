@@ -1,0 +1,131 @@
+JAVASCRIPT ENGINE – INTERVIEW NOTES
+
+What is a JavaScript Engine?
+A JavaScript Engine is a program that executes JavaScript code.
+
+It converts JavaScript code into machine code that the computer can understand.
+
+Examples of JavaScript Engines
+
+V8 → Google Chrome, Node.js
+
+SpiderMonkey → Firefox
+
+JavaScriptCore → Safari
+
+Chakra → Older Microsoft Edge
+
+Is JavaScript Interpreted or Compiled?
+JavaScript is both interpreted and compiled.
+
+Modern JS engines use Just-In-Time (JIT) compilation
+for better performance.
+
+Main Components of a JavaScript Engine
+
+Memory Heap
+
+Call Stack
+
+Memory Heap
+
+Used for memory allocation
+
+Stores objects, arrays, functions
+
+Managed automatically by Garbage Collector
+
+Call Stack
+
+Executes code line by line
+
+Uses LIFO (Last In, First Out)
+
+Stores execution contexts
+
+How JavaScript Engine Works (High Level Flow)
+
+JavaScript code is parsed
+
+Abstract Syntax Tree (AST) is created
+
+Code is compiled using JIT
+
+Code is executed
+
+Garbage collector frees unused memory
+
+Parsing Phase
+
+JS engine reads the code
+
+Checks for syntax errors
+
+Converts code into AST (Abstract Syntax Tree)
+
+Compilation (JIT – Just In Time)
+
+Code is compiled at runtime
+
+Optimized for performance
+
+Frequently used code is optimized further
+
+Execution Phase
+
+Execution contexts are created
+
+Code runs inside Call Stack
+
+Variables and functions are handled
+
+Garbage Collection
+
+Automatically removes unused memory
+
+Prevents memory leaks
+
+Uses algorithms like Mark and Sweep
+
+JavaScript Engine vs JavaScript Runtime
+
+JavaScript Engine:
+
+Executes JavaScript code
+
+Example: V8
+
+JavaScript Runtime:
+
+Engine + Web APIs + Event Loop + Callback Queue
+
+Example: Browser, Node.js
+
+Important Interview Clarification
+
+JavaScript Engine does NOT handle:
+
+setTimeout
+
+DOM
+
+fetch
+
+Promises resolution
+
+These are handled by the JavaScript Runtime environment.
+
+One-Line Interview Answer
+
+A JavaScript engine is a program that parses, compiles, and executes JavaScript code using components like the call stack and memory heap.
+
+Common Interview Questions
+
+Q: What is V8?
+A: V8 is Google’s high-performance JavaScript engine written in C++.
+
+Q: What is JIT compilation?
+A: Just-In-Time compilation converts JavaScript code to optimized machine code at runtime.
+
+Q: Does JS engine manage memory?
+A: Yes, using automatic garbage collection.

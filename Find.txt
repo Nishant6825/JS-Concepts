@@ -1,0 +1,26 @@
+let a = [12, 3, 4];
+let b = [12, 4, 5];
+
+
+// let ans = a.find(el => b.includes(el));
+
+// console.log(ans);
+
+
+
+
+function find(a, b) {
+    let found = []
+    for (let i = 0; i < a.length; i++) {
+        const element = a[i];
+        for (let j = 0; j < b.length; j++) {
+            if (a[i] === b[j]) {
+                found.push(b[j])
+            }
+        }
+    }
+    return found;
+}
+
+
+console.log(find(a, b));

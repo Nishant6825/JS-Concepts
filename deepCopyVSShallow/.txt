@@ -1,0 +1,160 @@
+JAVASCRIPT SHALLOW COPY & DEEP COPY – INTERVIEW NOTES
+
+What is Copying in JavaScript?
+Copying means creating a new variable from an existing one.
+
+In JavaScript:
+
+Primitive values are copied by value
+
+Objects and arrays are copied by reference
+
+Assignment vs Copy (Important)
+
+Example:
+let obj1 = { a: 1 };
+let obj2 = obj1;
+
+Explanation:
+
+obj2 does NOT create a new object
+
+Both obj1 and obj2 point to the same memory location
+
+Changes in one affect the other
+
+What is Shallow Copy?
+A shallow copy creates a new object, but nested objects are still copied by reference.
+
+Top-level properties are copied, nested objects share the same reference.
+
+Shallow Copy Examples
+
+Using spread operator:
+let obj1 = { a: 1, b: { c: 2 } };
+let obj2 = { ...obj1 };
+
+obj2.a = 10;
+obj2.b.c = 20;
+
+Result:
+obj1.a -> 1
+obj1.b.c -> 20 (changed)
+
+Using Object.assign():
+let obj2 = Object.assign({}, obj1);
+
+Array shallow copy:
+let arr1 = [1, 2, [3, 4]];
+let arr2 = [...arr1];
+
+arr2[2][0] = 99;
+Result:
+arr1[2][0] -> 99
+
+What is Deep Copy?
+A deep copy creates a completely independent copy, including all nested objects.
+
+Changes in the copied object do NOT affect the original object.
+
+Deep Copy Methods
+
+JSON.parse(JSON.stringify())
+
+Example:
+let obj1 = { a: 1, b: { c: 2 } };
+let obj2 = JSON.parse(JSON.stringify(obj1));
+
+obj2.b.c = 50;
+
+Result:
+obj1.b.c -> 2
+obj2.b.c -> 50
+
+Limitations:
+
+Removes functions
+
+Removes undefined
+
+Cannot handle Date, Map, Set
+
+Fails on circular references
+
+structuredClone() (Modern)
+
+Example:
+let obj2 = structuredClone(obj1);
+
+Advantages:
+
+Handles nested objects
+
+Supports Date, Map, Set
+
+Handles circular references
+
+Manual Deep Copy (Recursive)
+
+Example:
+function deepCopy(obj) {
+if (obj === null || typeof obj !== "object") {
+return obj;
+}
+let copy = Array.isArray(obj) ? [] : {};
+for (let key in obj) {
+copy[key] = deepCopy(obj[key]);
+}
+return copy;
+}
+
+Shallow vs Deep Copy Comparison
+
+Shallow Copy:
+
+Copies only first level
+
+Nested objects share reference
+
+Faster
+
+Less memory usage
+
+Deep Copy:
+
+Copies all levels
+
+Fully independent
+
+Slower
+
+More memory usage
+
+Interview Trick Questions
+
+Q: Is spread operator deep copy?
+A: No, it creates a shallow copy.
+
+Q: Does Object.assign() create deep copy?
+A: No, it creates a shallow copy.
+
+Q: Which is safest deep copy method?
+A: structuredClone() (if supported)
+
+When to Use What?
+
+Use Shallow Copy:
+
+When object has no nested structure
+
+When immutability at top level is enough
+
+Use Deep Copy:
+
+When nested data should not change
+
+When working with complex state (e.g., Redux)
+
+One-Line Interview Answer
+
+Shallow copy copies only the first level of an object while nested objects share the same reference, whereas deep copy creates a completely independent copy of all nested data.

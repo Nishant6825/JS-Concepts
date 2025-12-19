@@ -1,0 +1,162 @@
+EventEmitter in Node.js – Interview Prep
+1️⃣ What is EventEmitter?
+Definition (Interview-ready ⭐)
+
+EventEmitter is a core Node.js class that enables event-driven programming by allowing objects to emit named events and other objects to listen and respond to those events.
+
+👉 It is part of the events module.
+
+2️⃣ Why EventEmitter is Important?
+
+Foundation of event-driven architecture
+
+Used internally by Node.js (http, fs, streams)
+
+Enables decoupled communication
+
+Improves scalability & readability
+
+3️⃣ Basic Example
+const EventEmitter = require("events");
+
+const emitter = new EventEmitter();
+
+emitter.on("start", () => {
+  console.log("Event started");
+});
+
+emitter.emit("start");
+
+4️⃣ Key Methods (VERY IMPORTANT ⭐)
+Method	Description
+.on(event, listener)	Register listener
+.emit(event, data)	Emit event
+.once(event, listener)	Runs once
+.off(event, listener)	Remove listener
+.removeAllListeners()	Remove all
+5️⃣ Passing Data with Events
+emitter.on("order", (orderId) => {
+  console.log("Order received:", orderId);
+});
+
+emitter.emit("order", 123);
+
+6️⃣ on vs once (Common Interview Question ⭐)
+emitter.once("login", () => {
+  console.log("User logged in");
+});
+
+emitter.emit("login");
+emitter.emit("login"); // won't run
+
+7️⃣ Creating Custom EventEmitter Class
+const EventEmitter = require("events");
+
+class Logger extends EventEmitter {
+  log(message) {
+    this.emit("log", message);
+  }
+}
+
+const logger = new Logger();
+
+logger.on("log", msg => console.log(msg));
+logger.log("Hello EventEmitter");
+
+8️⃣ Real-World Use Case (Node.js Backend)
+Order Processing System
+emitter.on("orderPlaced", (order) => {
+  console.log("Save order:", order.id);
+});
+
+emitter.on("orderPlaced", (order) => {
+  console.log("Send email:", order.email);
+});
+
+emitter.emit("orderPlaced", { id: 1, email: "test@mail.com" });
+
+
+👉 Multiple listeners → clean separation of concerns.
+
+9️⃣ EventEmitter is Synchronous (TRICK QUESTION ⭐)
+emitter.on("event", () => {
+  console.log("Listener");
+});
+
+console.log("Before emit");
+emitter.emit("event");
+console.log("After emit");
+
+Output
+Before emit
+Listener
+After emit
+
+
+👉 .emit() runs listeners synchronously in order.
+
+🔟 Handling Errors (VERY IMPORTANT)
+Default Behavior
+
+If an "error" event is emitted and no listener exists, Node.js crashes.
+
+emitter.emit("error", new Error("Boom")); // ❌ crash
+
+Correct Way
+emitter.on("error", (err) => {
+  console.error("Handled:", err.message);
+});
+
+1️⃣1️⃣ Max Listeners Warning
+
+Default max listeners = 10
+
+emitter.setMaxListeners(20);
+
+
+⚠️ Too many listeners → possible memory leak.
+
+1️⃣2️⃣ EventEmitter vs Callbacks vs Promises
+Feature	EventEmitter	Callback	Promise
+Multiple listeners	✅	❌	❌
+One-time result	❌	❌	✅
+Streaming events	✅	❌	❌
+Error handling	Manual	Manual	Built-in
+1️⃣3️⃣ EventEmitter vs Pub-Sub
+
+EventEmitter → in-process
+
+Pub-Sub (Kafka/Redis) → distributed
+
+1️⃣4️⃣ Common Interview Q&A
+Q1. Is EventEmitter asynchronous?
+
+❌ No
+✔️ It executes listeners synchronously
+
+Q2. Can EventEmitter handle async listeners?
+
+✔️ Yes (listeners can be async functions)
+
+emitter.on("event", async () => {
+  await task();
+});
+
+Q3. Is EventEmitter thread-safe?
+
+✔️ Node.js is single-threaded
+
+Q4. Which Node.js modules use EventEmitter internally?
+
+✔️ http, fs, streams, net
+
+1️⃣5️⃣ Best Practices
+
+✔️ Use meaningful event names
+✔️ Avoid business logic in listeners
+✔️ Handle "error" event
+✔️ Clean up listeners
+
+1️⃣6️⃣ One-Line Interview Summary ⭐
+
+EventEmitter is a core Node.js pattern that enables event-driven, decoupled communication through synchronous event emission and listener execution.

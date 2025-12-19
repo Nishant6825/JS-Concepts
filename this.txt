@@ -1,0 +1,257 @@
+1. What is this?
+
+this refers to the object that is executing the current function.
+Its value is decided at runtime, not at function creation time.
+
+Rule:
+
+this depends on HOW a function is called
+
+2. this in Global Scope
+
+Browser:
+
+this === window
+
+
+Node.js:
+
+this === {}
+
+3. this inside Normal Function
+function show() {
+  console.log(this);
+}
+show();
+
+
+Non-strict mode:
+
+window
+
+
+Strict mode:
+
+undefined
+
+4. this inside Object Method
+const user = {
+  name: "Nishant",
+  greet() {
+    console.log(this.name);
+  }
+};
+
+user.greet();
+
+
+Output:
+
+Nishant
+
+
+this refers to the object before the dot.
+
+5. Losing this inside Nested Function
+const user = {
+  name: "Nishant",
+  greet() {
+    function inner() {
+      console.log(this.name);
+    }
+    inner();
+  }
+};
+
+
+Output:
+
+undefined
+
+
+Reason:
+Inner function is a normal function.
+
+6. Arrow Function Fix
+const user = {
+  name: "Nishant",
+  greet() {
+    const inner = () => {
+      console.log(this.name);
+    };
+    inner();
+  }
+};
+
+
+Arrow functions inherit this from parent scope.
+
+7. this in Arrow Functions
+
+Arrow functions:
+
+Do NOT have their own this
+
+Take this from lexical scope
+
+const obj = {
+  a: 10,
+  arrow: () => {
+    console.log(this.a);
+  }
+};
+
+
+Output:
+
+undefined
+
+8. Correct Use of Arrow Function
+const obj = {
+  a: 10,
+  method() {
+    const arrow = () => {
+      console.log(this.a);
+    };
+    arrow();
+  }
+};
+
+
+Output:
+
+10
+
+9. this with call, apply, bind
+
+call:
+
+fn.call(obj, arg1, arg2)
+
+
+apply:
+
+fn.apply(obj, [arg1, arg2])
+
+
+bind:
+
+const newFn = fn.bind(obj)
+
+
+bind returns a new function.
+
+10. this in Constructor Function
+function User(name) {
+  this.name = name;
+}
+
+const u1 = new User("Nishant");
+
+
+this refers to the newly created object.
+
+11. this in Class
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+  greet() {
+    console.log(this.name);
+  }
+}
+
+
+Same behavior as constructor functions.
+
+12. this in Event Listeners
+
+Normal function:
+
+button.onclick = function () {
+  console.log(this);
+};
+
+
+this → HTML element
+
+Arrow function:
+
+button.onclick = () => {
+  console.log(this);
+};
+
+
+this → window
+
+13. this in setTimeout
+
+Problem:
+
+setTimeout(function () {
+  console.log(this);
+}, 1000);
+
+
+Fix:
+
+setTimeout(() => {
+  console.log(this);
+}, 1000);
+
+14. this Precedence Order
+
+new
+
+bind
+
+call / apply
+
+Object method
+
+Default (window / undefined)
+
+15. Tricky Example
+const obj = {
+  name: "A",
+  getName() {
+    return this.name;
+  }
+};
+
+const fn = obj.getName;
+fn();
+
+
+Output:
+
+undefined
+
+
+Fix:
+
+const fn = obj.getName.bind(obj);
+
+16. Interview One-Liners
+
+this depends on function call
+
+Arrow functions don’t have this
+
+bind permanently fixes this
+
+call/apply invoke immediately
+
+Strict mode changes default this
+
+17. MOST ASKED QUESTION
+
+Why arrow functions should not be used as methods?
+
+Answer:
+Arrow functions do not have their own this, so they cannot refer to the calling object.
+
+18. FINAL INTERVIEW STATEMENT
+
+JavaScript determines this at runtime based on how a function is invoked.
+Arrow functions inherit this from lexical scope, while normal functions get this dynamically.

@@ -1,0 +1,6 @@
+let str = 'nayann';
+
+let reversed = str.split('').reverse().join('');
+
+if (str === reversed) console.log(`${str} is palinfrom`)
+else console.log(`${str} is not a palinfrom`);

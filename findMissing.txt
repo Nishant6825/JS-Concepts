@@ -1,0 +1,17 @@
+function findMissing(array) {
+    let cuurentSum = 0;
+    let n = array.length + 1
+    for (let i = 0; i < array.length; i++) {
+        const element = array[i];
+        cuurentSum += element
+
+    }
+
+    let exp = (n * (n + 1) / 2)
+
+    let number = exp - cuurentSum
+    return number;
+}
+
+
+console.log(findMissing([1, 3]))

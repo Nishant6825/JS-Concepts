@@ -1,0 +1,135 @@
+JAVASCRIPT IMPLICIT & EXPLICIT TYPE CONVERSION
+
+What is Type Conversion?
+Type conversion means changing one data type into another.
+
+JavaScript performs type conversion in two ways:
+
+Implicit Conversion (Type Coercion)
+
+Explicit Conversion (Manual Conversion)
+
+Implicit Type Conversion (Type Coercion)
+
+Implicit conversion happens automatically by JavaScript
+when an operation involves different data types.
+
+Implicit Conversion Examples
+
+Number + String:
+"5" + 2 = "52"
+Explanation:
+Number is converted to string
+
+String - Number:
+"5" - 2 = 3
+Explanation:
+String is converted to number
+
+String * Number:
+"5" * 2 = 10
+
+String / Number:
+"10" / 2 = 5
+
+Boolean Conversion (Implicit)
+
+true + 1 = 2
+false + 1 = 1
+
+Explanation:
+true becomes 1
+false becomes 0
+
+Null Conversion
+
+null + 1 = 1
+Explanation:
+null becomes 0
+
+Undefined Conversion
+
+undefined + 1 = NaN
+Explanation:
+undefined cannot be converted to a number
+
+Implicit Conversion with Equality (==)
+
+== allows type coercion
+
+Examples:
+"5" == 5 -> true
+true == 1 -> true
+null == undefined -> true
+
+Strict Equality (===)
+
+=== does NOT allow type coercion
+
+Examples:
+"5" === 5 -> false
+true === 1 -> false
+
+Explicit Type Conversion
+
+Explicit conversion is done manually by the developer.
+
+Explicit Conversion to Number
+
+Number("10") -> 10
+Number("10a") -> NaN
+
+parseInt("10") -> 10
+parseFloat("10.5") -> 10.5
+
+Explicit Conversion to String
+
+String(10) -> "10"
+(10).toString() -> "10"
+
+Explicit Conversion to Boolean
+
+Boolean(1) -> true
+Boolean(0) -> false
+Boolean("") -> false
+Boolean("hello") -> true
+
+Common Interview Traps
+
+"5" + 5 = "55"
+"5" - 5 = 0
+
+[] + [] = ""
+[] + {} = "[object Object]"
+{} + [] = 0 (in non-strict context)
+
+When to Use What?
+
+Use Implicit Conversion:
+
+Avoid in critical logic
+
+Can cause bugs if not understood
+
+Use Explicit Conversion:
+
+Preferred in production code
+
+Improves readability and safety
+
+Interview Questions
+
+Q: What is implicit type conversion?
+A: Automatic conversion performed by JavaScript during operations.
+
+Q: What is explicit type conversion?
+A: Manual conversion done by the developer using built-in functions.
+
+Q: Difference between == and ===?
+A:
+== compares values after type conversion
+=== compares both value and type
+
+One-Line Interview Answer
+
+Implicit conversion is automatically done by JavaScript during operations, while explicit conversion is manually performed by developers using conversion methods.

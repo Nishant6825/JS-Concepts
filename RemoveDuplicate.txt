@@ -1,0 +1,57 @@
+const arr = [1, 2, 2, 3, 4, 4, 5];
+
+// This is using plain for loop
+
+function checkDuplicate(arr) {
+    if (Array.isArray(arr)) {
+        let result = [];
+        for (let i = 0; i < arr.length; i++) {
+            console.log(arr[i]);
+
+            let IsDup = false;
+
+            for (let j = 0; j < result.length; j++) {
+                const element = result[j];
+
+                if (arr[i] === result[j]) {
+                    IsDup = true;
+                    break;
+                }
+            }
+
+            if (!IsDup) {
+                result.push(arr[i]);
+            }
+
+        }
+
+        return result;
+    }
+}
+
+
+console.log(checkDuplicate(arr));
+
+
+//Using reduce method
+let uniquearr = arr.reduce((acc, curr) => {
+    if (!acc.includes(curr)) acc.push(curr);
+    return acc
+}, [])
+
+
+console.log(uniquearr);
+
+
+
+//using the set method
+
+
+let newSet = new Set(arr);
+
+// let mainArr = Array.from(newSet);
+
+let mainArr = [...newSet]
+
+
+console.log(mainArr);

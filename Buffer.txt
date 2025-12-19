@@ -1,0 +1,201 @@
+const buf = Buffer.from("Hello");
+console.log(buf.toString());
+
+
+
+
+let buff = Buffer.alloc(10);
+buff.write('Nishant');
+
+
+console.log(buff.toString());
+
+
+
+const buf = Buffer.from("Hello", "utf8");
+
+console.log(buf);
+console.log(buf.toString('utf-8'));
+
+
+Buffers in Node.js – Interview Prep
+1️⃣ What is a Buffer?
+Definition (Interview-ready ⭐)
+
+A Buffer is a Node.js object used to handle raw binary data directly in memory, outside the JavaScript heap.
+
+👉 JavaScript normally works with strings & objects, not binary data.
+👉 Buffers enable working with files, streams, network packets, images, videos.
+
+2️⃣ Why Buffers Are Needed?
+
+Handle binary data
+
+Efficient file & network I/O
+
+Used by streams
+
+Required for encryption, compression, uploads
+
+Examples:
+
+File uploads
+
+Image processing
+
+TCP sockets
+
+Crypto operations
+
+3️⃣ Where Buffers Are Used?
+
+fs module
+
+streams
+
+http request/response
+
+crypto
+
+zlib
+
+4️⃣ Creating Buffers (VERY IMPORTANT ⭐)
+1️⃣ Buffer.from() (Recommended)
+const buf = Buffer.from("Hello");
+console.log(buf);
+
+2️⃣ Buffer.alloc()
+const buf = Buffer.alloc(10);
+
+
+✔️ Initializes memory
+✔️ Safe
+
+3️⃣ Buffer.allocUnsafe() (TRICK QUESTION ⚠️)
+const buf = Buffer.allocUnsafe(10);
+
+
+❌ Faster but memory not initialized
+❌ Can expose old data
+✔️ Must overwrite before use
+
+5️⃣ Buffer vs String
+const str = "Hello";
+const buf = Buffer.from(str);
+
+console.log(str.length); // 5
+console.log(buf.length); // 5 (bytes)
+
+
+⚠️ For Unicode:
+
+Buffer.from("✓").length; // 3 bytes
+
+6️⃣ Reading & Writing Buffers
+Write
+const buf = Buffer.alloc(10);
+buf.write("Node");
+
+Read
+console.log(buf.toString());
+
+7️⃣ Buffer Encoding (Interview Favorite ⭐)
+Encoding	Description
+utf8	Default
+base64	Binary → text
+hex	Hexadecimal
+ascii	ASCII chars
+const buf = Buffer.from("Hello", "utf8");
+console.log(buf.toString("base64"));
+
+8️⃣ Buffer Methods (Commonly Asked)
+Method	Purpose
+buf.toString()	Convert to string
+Buffer.concat()	Merge buffers
+buf.slice()	Share memory
+buf.copy()	Copy data
+buf.equals()	Compare
+9️⃣ Buffer Memory Sharing (TRICK QUESTION ⭐)
+const buf1 = Buffer.from("Hello");
+const buf2 = buf1.slice(0, 2);
+
+buf2[0] = 74; // 'J'
+console.log(buf1.toString()); // Jello
+
+
+👉 slice() shares memory.
+
+🔟 Buffer vs Stream (VERY COMMON)
+Buffer	Stream
+Loads all data	Chunk by chunk
+Memory heavy	Memory efficient
+Small data	Large data
+
+✔️ Streams internally use buffers.
+
+1️⃣1️⃣ Buffer & Streams Example
+fs.createReadStream("file.txt")
+  .on("data", chunk => {
+    console.log(Buffer.isBuffer(chunk)); // true
+  });
+
+1️⃣2️⃣ Buffer in HTTP (Real-world)
+let body = [];
+
+req.on("data", chunk => body.push(chunk));
+req.on("end", () => {
+  const data = Buffer.concat(body).toString();
+  console.log(data);
+});
+
+1️⃣3️⃣ Buffer & Security (IMPORTANT ⚠️)
+
+Never trust user-provided buffer size
+
+Avoid allocUnsafe unless required
+
+Validate encodings
+
+1️⃣4️⃣ Common Interview Questions & Answers
+Q1. Are Buffers part of JavaScript?
+
+❌ No
+✔️ Node.js specific (now standardized as TypedArray)
+
+Q2. Are Buffers mutable?
+
+✔️ Yes
+
+Q3. Does Buffer use JS heap?
+
+❌ No
+✔️ Uses external memory
+
+Q4. Difference between alloc and allocUnsafe?
+
+alloc → Safe, slower
+
+allocUnsafe → Fast, unsafe
+
+1️⃣5️⃣ One-Line Interview Summary ⭐
+
+Buffers in Node.js allow efficient handling of raw binary data by storing it outside the JavaScript heap, making them essential for file systems, streams, and network operations.
+
+Want More?
+
+I can also give:
+
+🔥 Buffer vs TypedArray
+
+🧠 Crypto & Buffer usage
+
+🎯 Coding round questions
+
+⚡ Memory leaks with Buffers
+
+📌 1-page interview cheat sheet
+
+
+
+
+

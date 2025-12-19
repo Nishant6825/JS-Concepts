@@ -1,5 +1,10 @@
-for (var i = 1; i <= 3; i++) {
-setTimeout(function() {
-console.log(i);
-}, 1000);
+function show(city , age) {
+console.log(this.name, city, age);
 }
+
+let obj = {
+  name: 1
+
+}
+
+show.apply(obj, ['nik', 25])
